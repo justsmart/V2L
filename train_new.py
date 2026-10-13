@@ -1,5 +1,5 @@
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 import os.path as osp
 import utils
 from utils import AverageMeter
@@ -15,8 +15,6 @@ from myloss_new import Loss
 from torch import nn
 from torch.optim import Adam, SGD
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingWarmRestarts, CosineAnnealingLR
-from tsne import save_tsne_samples_colored
-from heatmap import compute_and_plot_pairwise_kl
 from torchstat import stat
 # from constructGraph import getMvKNNGraph, getIncMvKNNGraph
 
@@ -406,7 +404,7 @@ if __name__ == '__main__':
     parser.add_argument('--lr', type=float, default=1)
     parser.add_argument('--momentum', type=float, default=0.9)
     parser.add_argument('--weight_decay', type=float, default=1e-4)
-    parser.add_argument('--epochs', type=int, default=100) #200 for corel5k  100 for iaprtc12 50 for pascal07 100 for espgame
+    parser.add_argument('--epochs', type=int, default=100) #200 for corel5k, iaprtc12, and espgame, 50 for pascal07 and mirflickr
     parser.add_argument('--pre_epochs', type=int, default=0)
     # Training args
     parser.add_argument('--z_dim', type=int, default=512)
