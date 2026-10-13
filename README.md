@@ -12,6 +12,14 @@ Official PyTorch implementation of **V2L**, published online in **IEEE Transacti
 
 V2L learns to predict multiple labels from partially observed views and incomplete label annotations. It combines a shared variational representation with adaptive fusion of individual view predictions. The shared branch captures stable semantics across views, while the decision branch estimates which available views are useful for each label of each instance.
 
+<p align="center">
+  <img src="images/main.png" alt="Overview of V2L: semantically consistent variational encoding, posterior regularization, and hybrid fusion" width="100%">
+</p>
+
+<p align="center">
+  <em><strong>V2L framework.</strong> Semantically consistent encoding provides a shared representation, while adaptive view-label relevance modeling combines complementary view-specific predictions.</em>
+</p>
+
 ## Highlights
 
 - **Semantically consistent encoding:** source perturbations and cross-view posterior alignment encourage stable, task-relevant latent representations.
@@ -19,6 +27,32 @@ V2L learns to predict multiple labels from partially observed views and incomple
 - **Hybrid fusion:** shared semantic predictions are combined with label-aware aggregation of view-specific predictions.
 - **Incomplete-data learning:** observation masks control feature reconstruction, latent consistency, and supervision from known labels.
 - **Five benchmarks:** evaluation covers Corel5k, Pascal07, ESPGame, IAPRTC12, and MIRFLICKR under incomplete and complete settings.
+
+## Method overview
+
+### Motivation
+
+Different views describe the same instance but contribute differently to individual labels. V2L learns consistent semantics across views while preserving the evidence needed for label-specific decisions.
+
+<p align="center">
+  <img src="images/illus.png" alt="Motivation: semantic consistency across view combinations and heterogeneous view contributions to labels" width="720">
+</p>
+
+<p align="center">
+  <em><strong>Two complementary motivations.</strong> (a) Semantic consistency across different view combinations. (b) Different views provide different evidence for each label.</em>
+</p>
+
+### View-label relevance modeling
+
+The active perception network estimates a relevance graph for each instance. Its label-specific view weights guide the aggregation of individual view predictions, complementing the prediction from the shared representation.
+
+<p align="center">
+  <img src="images/view-label.png" alt="Active perception network estimating instance-wise view-label relevance for adaptive late fusion" width="100%">
+</p>
+
+<p align="center">
+  <em><strong>Adaptive view-label fusion.</strong> View-wise predictions support relevance learning, and the learned relevance weights control the contribution of each view to each label.</em>
+</p>
 
 ## Results
 
@@ -72,6 +106,7 @@ python train_new.py
 
 ```text
 V2L/
+├── images/            # Paper figures and PNG previews used in this README
 ├── MLdataset.py       # MATLAB data loading, observation masks, and split loaders
 ├── VAE.py             # Variational encoder building blocks
 ├── model_VAE_new.py   # Cross-view latent encoding and distribution fusion
